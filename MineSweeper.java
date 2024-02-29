@@ -57,6 +57,7 @@ public class MineSweeper extends JFrame {
         flagMode(flagBtn, mineBtn);
         flagBtn.addActionListener(e -> flagMode(flagBtn, mineBtn));
         mineBtn.addActionListener(e -> flagMode(flagBtn, mineBtn));
+        settingBtn.addActionListener(e -> new SettingWindow(this));
         time.start();
 
         setFlagPanel.add(mineBtn, BorderLayout.WEST);
@@ -73,7 +74,7 @@ public class MineSweeper extends JFrame {
         setVisible(true);
     }
 
-    public void newGame(PopUpWindow window){
+    public void newGame(Window window){
         this.remove(window);
         game = new GameWindow(rowTiles, colTiles, mines, this);
         this.add(game, BorderLayout.CENTER);
@@ -124,7 +125,7 @@ public class MineSweeper extends JFrame {
         mineCounter.setText(String.format("Mine Remain : %d", mineCount));
     }
 
-    public void attachWindow(PopUpWindow window){
+    public void attachWindow(Window window){
         this.remove(game);
         add(window, BorderLayout.CENTER);
         revalidate();

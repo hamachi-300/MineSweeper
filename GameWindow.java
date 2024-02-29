@@ -137,4 +137,9 @@ public class GameWindow extends Window {
             }
         }
     }
+
+    @Override
+    public void setLabel(Window window){
+        // do nothing
+    }
 }

@@ -10,19 +10,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-class MineClearedWindow extends PopUpWindow {
+class MineClearedWindow extends Window {
 
     MineSweeper parent;
     public MineClearedWindow(MineSweeper parent){
-        super();
         this.parent = parent;
         setLayout(new GridBagLayout());
         setLabel(this);
         parent.attachWindow(this);
+        setVisible(true);
     }
 
     @Override
-    public void setLabel(PopUpWindow window){
+    public void setLabel(Window window){
         JPanel gameOverPanel = new JPanel(new BorderLayout());
         JLabel gameOverLabel = new JLabel("Mine Cleared", SwingConstants.CENTER);
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2));

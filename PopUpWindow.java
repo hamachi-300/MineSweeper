@@ -1,8 +1,9 @@
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 
-abstract class PopUpWindow extends JPanel{
+abstract class PopUpWindow extends JFrame{
     public PopUpWindow(){
-        setVisible(true);
+        setSize(300, 400);
+        setLocationRelativeTo(null);
     }
 
     abstract public void setLabel(PopUpWindow window);

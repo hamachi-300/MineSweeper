@@ -3,19 +3,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 
-class GameOverWindow extends PopUpWindow {
+class GameOverWindow extends Window {
     MineSweeper parent;
 
     public GameOverWindow(MineSweeper parent) {
-        super();
         this.parent = parent;
         setLayout(new GridBagLayout());
         setLabel(this);
         parent.attachWindow(this);
+        setVisible(true);
     }
 
     @Override
-    public void setLabel(PopUpWindow window) {
+    public void setLabel(Window window) {
         JPanel gameOverPanel = new JPanel(new BorderLayout());
         JLabel gameOverLabel = new JLabel("Game Over", SwingConstants.CENTER);
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
