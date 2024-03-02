@@ -13,14 +13,12 @@ import javax.swing.SwingConstants;
 class MineClearedWindow extends Window {
 
     private MineSweeper parent;
-    private GameWindow game;
     private int rowTiles;
     private int colTiles;
     private int mines;
 
     public MineClearedWindow(int rowTiles, int colTiles, int mines, MineSweeper parent, GameWindow game){
         this.parent = parent;
-        this.game = game;
         this.rowTiles = rowTiles;
         this.colTiles = colTiles;
         this.mines = mines;
