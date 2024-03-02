@@ -5,12 +5,21 @@ import javax.swing.*;
 
 class GameOverWindow extends Window {
     MineSweeper parent;
+    GameWindow game;
+    int rowTiles;
+    int colTiles;
+    int mines;
 
-    public GameOverWindow(MineSweeper parent) {
+    public GameOverWindow(int rowTiles, int colTiles, int mines, MineSweeper parent, GameWindow game) {
         this.parent = parent;
+        this.game = game;
+        this.rowTiles = rowTiles;
+        this.colTiles = colTiles;
+        this.mines = mines;
+
         setLayout(new GridBagLayout());
         setLabel(this);
-        parent.attachWindow(this);
+        parent.attachWindow(game, this);
         setVisible(true);
     }
 
@@ -22,6 +31,8 @@ class GameOverWindow extends Window {
         JButton newGameButton = new JButton("New Game");
         JButton exitButton = new JButton("Exit");
 
+        GameOverWindow gameOverWindow = this;
+
         exitButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -32,7 +43,7 @@ class GameOverWindow extends Window {
         newGameButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                parent.newGame(window);
+                parent.attachWindow(gameOverWindow, new GameWindow(rowTiles, colTiles, mines, parent));
             }
         });
 

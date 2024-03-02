@@ -2,7 +2,7 @@ public class MineTile extends Tile {
 
     boolean isRevealed = false;
 
-    public MineTile(int row, int col, MineSweeper parent) {
+    public MineTile(int row, int col, GameWindow parent) {
         super(row, col, parent);
     }
 

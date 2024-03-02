@@ -13,7 +13,7 @@ public class Menu extends Window{
 
     private ImageIcon mine;
 
-    public Menu(MineSweeper parent) {
+    public Menu(MineSweeper parent, Window oldwindow) {
         // Load alien image
         ImageIcon originalMineImage = new ImageIcon("images/mine.png");
         Image image = originalMineImage.getImage();
@@ -22,7 +22,7 @@ public class Menu extends Window{
 
         setLayout(new GridBagLayout());
         setLabel(this);
-        parent.attachWindow(this);
+        parent.attachWindow(oldwindow, this);
         setVisible(true);
     }
 
@@ -33,17 +33,20 @@ public class Menu extends Window{
         JLabel mineImage = new JLabel(mine);
         JButton newGameBtn = new JButton("New Game");
         JButton resumeBtn = new JButton("Resume");
+        JButton historyBtn = new JButton("History");
         JButton exitBtn = new JButton("Exit");
 
         mineImage.setAlignmentX(CENTER_ALIGNMENT);
         newGameBtn.setAlignmentX(CENTER_ALIGNMENT);
         resumeBtn.setAlignmentX(CENTER_ALIGNMENT);
+        historyBtn.setAlignmentX(CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
         allMenu.add(mineImage);
         allMenu.add(Box.createVerticalStrut(20));
         allMenu.add(newGameBtn);
         allMenu.add(resumeBtn);
+        allMenu.add(historyBtn);
         allMenu.add(exitBtn);
 
         GridBagConstraints gbc = new GridBagConstraints();

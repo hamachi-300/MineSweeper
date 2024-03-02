@@ -3,7 +3,7 @@ public class NormalTile extends Tile {
     private int rowTile;
     private int colTile;
 
-    public NormalTile(int row, int col, int rowTile, int colTile, MineSweeper parent) {
+    public NormalTile(int row, int col, int rowTile, int colTile, GameWindow parent) {
         super(row, col, parent);
 
         this.rowTile = rowTile;

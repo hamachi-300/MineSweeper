@@ -12,12 +12,22 @@ import javax.swing.SwingConstants;
 
 class MineClearedWindow extends Window {
 
-    MineSweeper parent;
-    public MineClearedWindow(MineSweeper parent){
+    private MineSweeper parent;
+    private GameWindow game;
+    private int rowTiles;
+    private int colTiles;
+    private int mines;
+
+    public MineClearedWindow(int rowTiles, int colTiles, int mines, MineSweeper parent, GameWindow game){
         this.parent = parent;
+        this.game = game;
+        this.rowTiles = rowTiles;
+        this.colTiles = colTiles;
+        this.mines = mines;
+
         setLayout(new GridBagLayout());
         setLabel(this);
-        parent.attachWindow(this);
+        parent.attachWindow(game, this);
         setVisible(true);
     }
 
@@ -28,6 +38,7 @@ class MineClearedWindow extends Window {
         JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
         JButton newGameButton = new JButton("New Game");
         JButton exitButton = new JButton("Exit");
+        MineClearedWindow mineClearedWindow = this;
 
         exitButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -39,7 +50,7 @@ class MineClearedWindow extends Window {
         newGameButton.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent e){
-                parent.newGame(window);            
+                parent.attachWindow(mineClearedWindow, new GameWindow(rowTiles, colTiles, mines, parent));
             }
         });
 

@@ -8,9 +8,12 @@ import javax.swing.JPanel;
 public class SettingWindow extends PopUpWindow{
 
     private MineSweeper parent;
+    private GameWindow game;
 
-    public SettingWindow(MineSweeper parent) {
+    public SettingWindow(MineSweeper parent, GameWindow game) {
         this.parent = parent;
+        this.game = game;
+
         setSize(300, 400);
         setLabel(this);
         setVisible(true);
@@ -46,6 +49,6 @@ public class SettingWindow extends PopUpWindow{
 
     public void toMenu(){
         // change window to menu
-        new Menu(parent);
+        new Menu(parent, game);
     }
 }

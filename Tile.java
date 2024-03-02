@@ -5,9 +5,9 @@ abstract public class Tile extends JButton {
     private int  col;
     private boolean isRevealed = false;
     private boolean isFlag = false;
-    private MineSweeper parent;
+    private GameWindow parent;
 
-    public Tile(int row, int col, MineSweeper parent){
+    public Tile(int row, int col, GameWindow parent){
         this.row = row;
         this.col= col;
         this.parent = parent;
