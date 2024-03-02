@@ -61,7 +61,7 @@ public class GameWindow extends Window {
         flagMode(flagBtn, mineBtn);
         flagBtn.addActionListener(e -> flagMode(flagBtn, mineBtn));
         mineBtn.addActionListener(e -> flagMode(flagBtn, mineBtn));
-        settingBtn.addActionListener(e -> new SettingWindow(parent, this));
+        settingBtn.addActionListener(e -> new SettingWindow(rowTiles, colTiles, mines, parent, this));
         time.start();
 
         setFlagPanel.add(mineBtn, BorderLayout.WEST);

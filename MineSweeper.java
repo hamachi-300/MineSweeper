@@ -13,7 +13,7 @@ public class MineSweeper extends JFrame {
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
 
-        attachWindow(null, new GameWindow(rowTiles, colTiles, mines, this));
+        attachWindow(null, new Menu(rowTiles, colTiles, mines, this, null));
 
         setVisible(true);
     }

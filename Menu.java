@@ -12,9 +12,19 @@ import javax.swing.JPanel;
 public class Menu extends Window{
 
     private ImageIcon mine;
+    private MineSweeper parent;
+    private int rowTiles;
+    private int colTiles;
+    private int mines;
 
-    public Menu(MineSweeper parent, Window oldwindow) {
-        // Load alien image
+
+    public Menu(int rowTiles, int colTiles, int mines, MineSweeper parent, Window oldwindow) {
+        this.parent = parent;
+        this.rowTiles = rowTiles;
+        this.colTiles = colTiles;
+        this.mines = mines;
+
+        // Load mine Image
         ImageIcon originalMineImage = new ImageIcon("images/mine.png");
         Image image = originalMineImage.getImage();
         Image newImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -42,6 +52,9 @@ public class Menu extends Window{
         historyBtn.setAlignmentX(CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
+        newGameBtn.addActionListener(e -> newGameBtn());
+        exitBtn.addActionListener(e -> exitBtn());
+
         allMenu.add(mineImage);
         allMenu.add(Box.createVerticalStrut(20));
         allMenu.add(newGameBtn);
@@ -53,5 +66,13 @@ public class Menu extends Window{
         gbc.anchor = GridBagConstraints.CENTER;
 
         add(allMenu, gbc);
+    }
+
+    private void newGameBtn(){
+        parent.attachWindow(this, new GameWindow(rowTiles, colTiles, mines, parent));
+    }
+
+    private void exitBtn(){
+        System.exit(0);
     }
 }

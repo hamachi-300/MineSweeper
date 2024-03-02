@@ -9,10 +9,16 @@ public class SettingWindow extends PopUpWindow{
 
     private MineSweeper parent;
     private GameWindow game;
+    private int rowTiles;
+    private int colTiles;
+    private int mines;
 
-    public SettingWindow(MineSweeper parent, GameWindow game) {
+    public SettingWindow(int rowTiles, int colTiles, int mines, MineSweeper parent, GameWindow game) {
         this.parent = parent;
         this.game = game;
+        this.rowTiles = rowTiles;
+        this.colTiles = colTiles;
+        this.mines = mines;
 
         setSize(300, 400);
         setLabel(this);
@@ -32,9 +38,9 @@ public class SettingWindow extends PopUpWindow{
         menuBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        resumeBtn.addActionListener(e -> this.setVisible(false));
-        menuBtn.addActionListener(e -> toMenu());
-        exitBtn.addActionListener(e -> System.exit(0));
+        resumeBtn.addActionListener(e -> resumeBtn());
+        menuBtn.addActionListener(e -> menuBtn());
+        exitBtn.addActionListener(e -> exitBtn());
 
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         // center vertically all btn 
@@ -47,8 +53,17 @@ public class SettingWindow extends PopUpWindow{
         window.add(panel);
     }
 
-    public void toMenu(){
-        // change window to menu
-        new Menu(parent, game);
+    private void resumeBtn(){
+        dispose();
+    }
+
+    private void menuBtn(){
+        new Menu(rowTiles, colTiles, mines, parent, game);
+        dispose();
+    }
+
+    private void exitBtn(){
+        System.exit(0);
+        dispose();
     }
 }
