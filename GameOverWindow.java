@@ -4,18 +4,20 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 class GameOverWindow extends Window {
-    MineSweeper parent;
-    GameWindow game;
-    int rowTiles;
-    int colTiles;
-    int mines;
+    private MineSweeper parent;
+    private GameWindow game;
+    private int rowTiles;
+    private int colTiles;
+    private int mines;
+    private int difficulty;
 
-    public GameOverWindow(int rowTiles, int colTiles, int mines, MineSweeper parent, GameWindow game) {
+    public GameOverWindow(int rowTiles, int colTiles, int mines, MineSweeper parent, GameWindow game, int difficulty) {
         this.parent = parent;
         this.game = game;
         this.rowTiles = rowTiles;
         this.colTiles = colTiles;
         this.mines = mines;
+        this.difficulty = difficulty;
 
         setLayout(new GridBagLayout());
         setLabel(this);
@@ -43,7 +45,7 @@ class GameOverWindow extends Window {
         newGameButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                parent.attachWindow(gameOverWindow, new GameWindow(rowTiles, colTiles, mines, parent));
+                parent.attachWindow(gameOverWindow, new GameWindow(rowTiles, colTiles, mines, parent, difficulty));
             }
         });
 

@@ -18,6 +18,7 @@ public class GameWindow extends Window {
     private int colTiles;
     private int mines;
     private int mineCount;
+    private int difficulty;
     private JLabel mineCounter;
     private int fleshTime = 0;
     private Tile[][] tileList;
@@ -27,12 +28,12 @@ public class GameWindow extends Window {
     protected Timer time;
     Random rand = new Random();
 
-    public GameWindow(int rowTiles, int colTiles, int mines, MineSweeper parent) {
-        System.out.println("Hello WOlrd");
+    public GameWindow(int rowTiles, int colTiles, int mines, MineSweeper parent, int difficulty) {
         this.rowTiles = rowTiles;
         this.colTiles = colTiles;
         this.mines = mines;
         this.mineCount = mines;
+        this.difficulty = difficulty;
         tileList = new Tile[rowTiles][colTiles];
         setLayout(new BorderLayout());
 
@@ -132,7 +133,7 @@ public class GameWindow extends Window {
                                         if ((rowTiles * colTiles) - tileCount - mines == 0) {
                                             // call gameClearWindow
                                             time.stop();
-                                            new MineClearedWindow(rowTiles, colTiles, mines, parent, gameWindow);
+                                            new MineClearedWindow(rowTiles, colTiles, mines, parent, gameWindow, difficulty, timeCounter.getText());
                                         }
                                     }
                                 }
@@ -182,7 +183,7 @@ public class GameWindow extends Window {
         Timer gameOverDelay = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // call gameOverWindow
-                new GameOverWindow(rowTiles, colTiles, mines, parent, game);
+                new GameOverWindow(rowTiles, colTiles, mines, parent, game, difficulty);
             }
         });
         gameOverDelay.setRepeats(false);
