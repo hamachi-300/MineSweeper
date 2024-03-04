@@ -22,34 +22,37 @@ public class HistoryWindow extends PopUpWindow{
     @Override
     public void setLabel(PopUpWindow window){
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel historyLabel = new JLabel("History");
-        
         String filePath = "history.txt";
         File file = new File(filePath);
+        
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        // make history label center hollizontally
         historyLabel.setAlignmentX(CENTER_ALIGNMENT);
+
         panel.add(historyLabel);
+        // add space between historyLabel and history info
         panel.add(Box.createVerticalStrut(20));
 
-        if (file.exists()){
-            try {
-                FileReader fileReader = new FileReader(filePath);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-                String line;
+        // create Exception for handle when read file
+        try {
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
 
-                while ((line = bufferedReader.readLine()) != null){
-                    JLabel label = new JLabel(line);
-                    label.setAlignmentX(CENTER_ALIGNMENT);
-                    panel.add(label);
-                }
-
-                bufferedReader.close();
-            } catch (IOException e){
-                System.out.println("Error while load file path : " + e.getMessage());
-                e.printStackTrace();
+            while ((line = bufferedReader.readLine()) != null){
+                JLabel label = new JLabel(line);
+                label.setAlignmentX(CENTER_ALIGNMENT);
+                panel.add(label);
             }
+            bufferedReader.close();
+
+        } catch (IOException e){
+            System.out.println("Error while load file path : " + e.getMessage());
+            e.printStackTrace();
         }
+        // create scroll when size of infomation more than preferred size
         JScrollPane scrollPane = new JScrollPane(panel);
         scrollPane.setPreferredSize(new Dimension(300, 400));
         getContentPane().add(scrollPane, BorderLayout.CENTER);

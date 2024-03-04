@@ -13,19 +13,20 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import java.util.Random;
+
 public class GameWindow extends Window {
     private int rowTiles;
     private int colTiles;
     private int mines;
     private int mineCount;
     private int difficulty;
-    private JLabel mineCounter;
     private int fleshTime = 0;
-    private Tile[][] tileList;
     private boolean gameOver = false;
-
     protected boolean flagMode = true;
-    protected Timer time;
+
+    protected Timer timer;
+    private JLabel mineCounter;
+    private Tile[][] tileList;
     Random rand = new Random();
 
     public GameWindow(int rowTiles, int colTiles, int mines, MineSweeper parent, int difficulty) {
@@ -37,34 +38,39 @@ public class GameWindow extends Window {
         tileList = new Tile[rowTiles][colTiles];
         setLayout(new BorderLayout());
 
-        // Create game window here
         JPanel header = new JPanel(new BorderLayout());
         JPanel footer = new JPanel(new BorderLayout());
         JPanel setFlagPanel = new JPanel(new BorderLayout());
         JPanel board = new JPanel(new GridLayout(rowTiles, colTiles, 0, 0));
 
+        // create mineCounter label
         mineCounter = new JLabel(String.format("Mine Remain : %d", mines));
         JLabel timeCounter = new JLabel("Time : 00:00:00");
         JButton settingBtn = new JButton("setting");
         JButton mineBtn = new JButton("*");
         JButton flagBtn = new JButton("|>");
 
+        // set Monospaced font
         mineCounter.setFont(new Font("Monospaced", Font.BOLD, 18));
         timeCounter.setFont(new Font("Monospaced", Font.BOLD, 18));
 
-        time = new Timer(1000, new ActionListener() {
+        // create timer when game start
+        timer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fleshTime++;
                 updateTimerLabel(timeCounter);
             }
         });
-        // set default Btn
+
+        // switch bettween flag mode and mine mode
         flagMode(flagBtn, mineBtn);
         flagBtn.addActionListener(e -> flagMode(flagBtn, mineBtn));
         mineBtn.addActionListener(e -> flagMode(flagBtn, mineBtn));
         settingBtn.addActionListener(e -> new SettingWindow(rowTiles, colTiles, mines, parent, this));
-        time.start();
+        // start timer
+        timer.start();
 
+        // add all component
         setFlagPanel.add(mineBtn, BorderLayout.WEST);
         setFlagPanel.add(flagBtn, BorderLayout.EAST);
 
@@ -73,16 +79,19 @@ public class GameWindow extends Window {
         footer.add(setFlagPanel, BorderLayout.EAST);
         footer.add(settingBtn, BorderLayout.WEST);
 
+        // set tile and mine
         placeTiles(tileList, parent);
         placeMine(tileList, parent);
 
         GameWindow gameWindow = this;
+        // loop for add all Tile and add MouseListener
         for (int i = 0; i < rowTiles; i++){
             for (int j = 0; j < colTiles; j++){
                 Tile tile = tileList[i][j];
                 tile.setFocusable(false);
                 tile.setMargin(new Insets(0, 0, 0, 0));
                 tile.addMouseListener(new MouseAdapter() {
+                    // method handle when mouse is pressed
                     @Override
                     public void mousePressed(MouseEvent e){
                         Tile tile = (Tile) e.getSource();
@@ -90,6 +99,7 @@ public class GameWindow extends Window {
                         // if game over cannot click button
                         if (!gameOver){
                             // check flagMode
+                            // if true both left or right will set flag
                             if (flagMode == true){
                                 if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3){
                                     Tile thisTile = (Tile) e.getSource();
@@ -102,7 +112,7 @@ public class GameWindow extends Window {
                                     }
                                 }
                             } else {
-                                // Left Click Mouse
+                                // left click mouse will reveal tile
                                 if (e.getButton() == MouseEvent.BUTTON1 && !tile.isFlag()){
                                     // expose all mine if tile is mine
                                     if (MineTile.class.isAssignableFrom(tile.getClass())){
@@ -114,11 +124,11 @@ public class GameWindow extends Window {
                                             }
                                         }
                                         gameOver = true;
-                                        time.stop();
+                                        timer.stop();
                                         startOverWindow(parent);
                                     } else {
                                         tile.revealTile(tileList);
-                                        // tileCount is tiles that revealed
+                                        // count all tile was revealed
                                         int tileCount = 0;
                                         for (Tile[] tileRow : tileList){
                                             for (Tile thisTile : tileRow){
@@ -129,16 +139,15 @@ public class GameWindow extends Window {
                                         }
     
                                         // check game is cleared
-                                        
                                         if ((rowTiles * colTiles) - tileCount - mines == 0) {
-                                            // call gameClearWindow
-                                            time.stop();
+                                            // call gameClearWindow if game was cleared
+                                            timer.stop();
                                             new MineClearedWindow(rowTiles, colTiles, mines, parent, gameWindow, difficulty, timeCounter.getText());
                                         }
                                     }
                                 }
 
-                                // Left Click Mouse
+                                // right click mouse will set flag
                                 if (e.getButton() == MouseEvent.BUTTON3){
                                     Tile thisTile = (Tile) e.getSource();
                                     if (thisTile.isEnabled()){
@@ -166,7 +175,7 @@ public class GameWindow extends Window {
         add(footer, BorderLayout.SOUTH);
     }
 
-    // time methods
+    // set timerLabel text
     public void updateTimerLabel(JLabel timeCounter){
         int hour = fleshTime/360;
         int minute = (fleshTime/60) % 60;
@@ -177,7 +186,7 @@ public class GameWindow extends Window {
         timeCounter.setText(String.format("Time : %s:%s:%s", hourStr, minuteStr, secondStr));
     }
     
-
+    // delay 1 second before create GameOverWindow
     private void startOverWindow(MineSweeper parent){
         GameWindow game = this;
         Timer gameOverDelay = new Timer(1000, new ActionListener() {
@@ -190,6 +199,8 @@ public class GameWindow extends Window {
         gameOverDelay.start();
         
     }
+
+    // place tiles method
     private void placeTiles(Tile[][] tileList, MineSweeper parent){
         for (int i = 0; i < rowTiles; i++){
             for (int j = 0; j < colTiles; j++){
@@ -200,6 +211,7 @@ public class GameWindow extends Window {
         }
     }
 
+    // place mines method
     private void placeMine(Tile[][] tileList, MineSweeper parent){
 
         for (int i = 0; i < mines; i++){
@@ -214,7 +226,9 @@ public class GameWindow extends Window {
         }
     }
 
-    // 
+    // method handle flagMode
+    // if flagMode is true it will set false
+    // if flagMode is false it will set true
     public void flagMode(JButton flagBtn, JButton mineBtn){
         if (flagMode == false){
             mineBtn.setEnabled(true);
@@ -227,6 +241,8 @@ public class GameWindow extends Window {
         }
     }
 
+    // method will update mineCounter
+    // when num is 0 mean mineCount will increase
     public void updateMineCounter(int num){
         if (num == 0) {
             mineCount+=1;

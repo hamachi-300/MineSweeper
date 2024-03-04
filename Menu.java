@@ -24,8 +24,9 @@ public class Menu extends Window{
         this.colTiles = colTiles;
         this.mines = mines;
 
-        // Load mine Image
+        // load mine image
         ImageIcon originalMineImage = new ImageIcon("images/mine.png");
+        // set mine image scale
         Image image = originalMineImage.getImage();
         Image newImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         mine = new ImageIcon(newImage);
@@ -43,19 +44,19 @@ public class Menu extends Window{
         JLabel difficultyLabel = new JLabel("Difficulty : Normal");
         JLabel mineImage = new JLabel(mine);
         JButton newGameBtn = new JButton("New Game");
-        JButton resumeBtn = new JButton("Resume");
         JButton difficultyBtn = new JButton("Diffculty");
         JButton historyBtn = new JButton("History");
         JButton exitBtn = new JButton("Exit");
 
+        // center horizontally for all button and label in menu
         difficultyLabel.setAlignmentX(CENTER_ALIGNMENT);
         mineImage.setAlignmentX(CENTER_ALIGNMENT);
         newGameBtn.setAlignmentX(CENTER_ALIGNMENT);
-        resumeBtn.setAlignmentX(CENTER_ALIGNMENT);
         difficultyBtn.setAlignmentX(CENTER_ALIGNMENT);
         historyBtn.setAlignmentX(CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
+        // add actionListener for all button
         newGameBtn.addActionListener(e -> newGameBtn());
         difficultyBtn.addActionListener(e -> difficultyBtn(difficultyLabel));
         historyBtn.addActionListener(e -> historyBtn());
@@ -68,39 +69,45 @@ public class Menu extends Window{
         allMenu.add(mineImage);
         allMenu.add(Box.createVerticalStrut(20));
         allMenu.add(newGameBtn);
-        allMenu.add(resumeBtn);
         allMenu.add(difficultyBtn);
         allMenu.add(historyBtn);
         allMenu.add(exitBtn);
 
+        // create GridBagConstraints for center vertically allMenu panel
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
 
         add(allMenu, gbc);
     }
 
+    // will create new game
     private void newGameBtn(){
         parent.attachWindow(this, new GameWindow(this.rowTiles, this.colTiles, this.mines, parent, this.difficulty));
     }
 
+    // set difficult
     private void difficultyBtn(JLabel difficultyLabel){
         new GameDifficultyWindow(this, parent, difficultyLabel);
     }
 
+    // check history score
     private void historyBtn(){
         new HistoryWindow();
     }
 
+    // exit game
     private void exitBtn(){
         System.exit(0);
     }
 
+    // set game difficulty
     public void setDifficulty(int colTiles, int rowTiles, int mines){
         this.colTiles = colTiles;
         this.rowTiles = rowTiles;
         this.mines = mines;
     }
 
+    // check game difficulty
     public void checkDifficulty(int rowTiles, int mines, JLabel difficultyLabel){
         if (rowTiles == 10 && mines == 5) {
             difficulty = 1;

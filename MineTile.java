@@ -6,6 +6,7 @@ public class MineTile extends Tile {
         super(row, col, parent);
     }
 
+    // render mine image
     @Override
     public void renderTile(Tile[][] tileList){
         setText("*");

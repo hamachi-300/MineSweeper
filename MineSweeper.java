@@ -8,11 +8,12 @@ public class MineSweeper extends JFrame {
     private int colTiles;
     private int mines;
 
-    public MineSweeper(int rowTiles, int colTiles, int mines){
+    public MineSweeper(){
 
-        this.rowTiles = rowTiles;
-        this.colTiles = colTiles;
-        this.mines = mines;
+        // set default of rowTile colTiles and mines
+        this.rowTiles = 10;
+        this.colTiles = 10;
+        this.mines = 10;
 
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,6 +26,7 @@ public class MineSweeper extends JFrame {
         setVisible(true);
     }
 
+    // this method will delete old Window and add new Window instead of old Window
     public void attachWindow(Window oldWindow, Window newWindow){
         if (!(oldWindow == null)){
             this.remove(oldWindow);
@@ -34,6 +36,7 @@ public class MineSweeper extends JFrame {
         repaint();
     }
 
+    // will set colTiles and rowTiles according difficulty
     public void setDifficulty(int colTiles, int rowTiles, int mines){
         this.colTiles = colTiles;
         this.rowTiles = rowTiles;

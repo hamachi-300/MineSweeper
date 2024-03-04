@@ -30,19 +30,21 @@ class MineClearedWindow extends Window {
         this.mines = mines;
         this.difficulty = difficulty;
 
-        saveHistory(time, difficulty);
+        saveHistory(time.substring(7), difficulty);
         setLayout(new GridBagLayout());
         setLabel(this);
         parent.attachWindow(game, this);
         setVisible(true);
     }
-
+    
+    // save score to history.txt
     public void saveHistory(String time, int difficulty){
         // DD//MM/YY : DIFFCULTY : TIME
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH));
         String difficultyStr;
         String filePath = "history.txt";
 
+        // convert difficulty integer to str
         switch (difficulty) {
             case 1:
                 difficultyStr = "Easy";
@@ -61,8 +63,8 @@ class MineClearedWindow extends Window {
                 break;
         }
 
+        // sum everything together
         String info = String.format("%s : %s : %s \n", date, difficultyStr, time);
-        // check history.txt is exist if not create it
         try {
             FileWriter writer = new FileWriter(filePath, true);
             writer.write(info);
@@ -72,6 +74,7 @@ class MineClearedWindow extends Window {
             e.printStackTrace();
         }
     }
+    
     @Override
     public void setLabel(Window window){
         JPanel gameOverPanel = new JPanel(new BorderLayout());

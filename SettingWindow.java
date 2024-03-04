@@ -52,16 +52,19 @@ public class SettingWindow extends PopUpWindow{
 
         window.add(panel);
     }
-
+    
+    // when click resumeBtn will dispose setting window
     private void resumeBtn(){
         dispose();
     }
 
+    // when click menuBtn will change to menu window and dispose setting window
     private void menuBtn(){
         new Menu(rowTiles, colTiles, mines, parent, game);
         dispose();
     }
 
+    // when click exitBtn will exit game
     private void exitBtn(){
         System.exit(0);
         dispose();
